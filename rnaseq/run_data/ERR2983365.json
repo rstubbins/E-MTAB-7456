@@ -1,0 +1,13 @@
+{
+	"n_targets": 188753,
+	"n_bootstraps": 0,
+	"n_processed": 24747044,
+	"n_pseudoaligned": 20210518,
+	"n_unique": 4914858,
+	"p_pseudoaligned": 81.7,
+	"p_unique": 19.9,
+	"kallisto_version": "0.46.2",
+	"index_version": 10,
+	"start_time": "Mon Apr 27 20:44:33 2020",
+	"call": "kallisto quant --index=/Users/ryanstubbins/downloads/Git_rjs393/E-MTAB-7456/transcriptome.idx -b, --rf-stranded --single -l 200 -s 20 --output-dir=/Users/ryanstubbins/downloads/Git_rjs393/E-MTAB-7456/tsv /Users/ryanstubbins/downloads/Git_rjs393/E-MTAB-7456/ERR2983365.fastq.gz"
+}
