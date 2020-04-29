@@ -1,0 +1,179 @@
+---
+Author: Ryan J Stubbins
+Date: April 24, 2020
+Title: E-MTAB-7456
+output: 
+  html_document: 
+    keep_md: yes
+---
+
+```{r}
+#Load libraries
+library(tidyverse)
+library(ggplot2)
+library(tximport)
+library(tximportData)
+library(edgeR)
+library(tximport)
+library(tximportData)
+library(ensembldb)
+library(biomaRt)
+library(EnsDb.Hsapiens.v86)
+library(reshape2)
+```
+
+```{r}
+#Import and clean meta-data from E-MTAB-7456
+dir <- "/Users/ryanstubbins/Downloads/Git_rjs393/E-MTAB-7456/rnaseq/raw_counts"
+
+samples <- read.table("/Users/ryanstubbins/Downloads/Git_rjs393/E-MTAB-7456/E-MTAB-7456.txt", header = TRUE, fill = TRUE)
+
+samples <- samples[ -c(1, 5:6, 8:9, 10, 11, 14:20, 22:24, 25:42, 44, 47:59)]
+
+samples <- samples[ -c(11:19)]
+
+samples <- samples[ -c(1, 9)]
+
+samples <- column_to_rownames(samples, var = "Assay")
+
+samples <- as.data.frame(samples)
+
+colnames(samples)[1] <- "ENA"
+colnames(samples)[2] <- "BioSD"
+colnames(samples)[3] <- "age_yrs"
+colnames(samples)[4] <- "sex"
+colnames(samples)[5] <- "accession"
+colnames(samples)[6] <- "status"
+colnames(samples)[7] <- "protocol"
+
+samples <- samples[c(3,4,6,5,1,2,7)]
+```
+
+```{r}
+#Summarize transcript abundancies to genes with txImport
+edb <- EnsDb.Hsapiens.v86
+
+tx2gene <- transcripts(edb, columns = c("tx_id", "gene_name"), filter=AnnotationFilterList(), return.type="DataFrame")
+
+data <- c("/Users/ryanstubbins/Downloads/Git_rjs393/E-MTAB-7456/rnaseq/raw_counts/ERR2983350.tsv",
+          "/Users/ryanstubbins/Downloads/Git_rjs393/E-MTAB-7456/rnaseq/raw_counts/ERR2983351.tsv",
+          "/Users/ryanstubbins/Downloads/Git_rjs393/E-MTAB-7456/rnaseq/raw_counts/ERR2983352.tsv",
+          "/Users/ryanstubbins/Downloads/Git_rjs393/E-MTAB-7456/rnaseq/raw_counts/ERR2983353.tsv",
+          "/Users/ryanstubbins/Downloads/Git_rjs393/E-MTAB-7456/rnaseq/raw_counts/ERR2983354.tsv",
+          "/Users/ryanstubbins/Downloads/Git_rjs393/E-MTAB-7456/rnaseq/raw_counts/ERR2983355.tsv",
+          "/Users/ryanstubbins/Downloads/Git_rjs393/E-MTAB-7456/rnaseq/raw_counts/ERR2983356.tsv",
+          "/Users/ryanstubbins/Downloads/Git_rjs393/E-MTAB-7456/rnaseq/raw_counts/ERR2983357.tsv",
+          "/Users/ryanstubbins/Downloads/Git_rjs393/E-MTAB-7456/rnaseq/raw_counts/ERR2983358.tsv",
+          "/Users/ryanstubbins/Downloads/Git_rjs393/E-MTAB-7456/rnaseq/raw_counts/ERR2983359.tsv",
+          "/Users/ryanstubbins/Downloads/Git_rjs393/E-MTAB-7456/rnaseq/raw_counts/ERR2983360.tsv",
+          "/Users/ryanstubbins/Downloads/Git_rjs393/E-MTAB-7456/rnaseq/raw_counts/ERR2983361.tsv",
+          "/Users/ryanstubbins/Downloads/Git_rjs393/E-MTAB-7456/rnaseq/raw_counts/ERR2983362.tsv",
+          "/Users/ryanstubbins/Downloads/Git_rjs393/E-MTAB-7456/rnaseq/raw_counts/ERR2983363.tsv",
+          "/Users/ryanstubbins/Downloads/Git_rjs393/E-MTAB-7456/rnaseq/raw_counts/ERR2983364.tsv",
+          "/Users/ryanstubbins/Downloads/Git_rjs393/E-MTAB-7456/rnaseq/raw_counts/ERR2983365.tsv",
+          "/Users/ryanstubbins/Downloads/Git_rjs393/E-MTAB-7456/rnaseq/raw_counts/ERR2983366.tsv",
+          "/Users/ryanstubbins/Downloads/Git_rjs393/E-MTAB-7456/rnaseq/raw_counts/ERR2983367.tsv",
+          "/Users/ryanstubbins/Downloads/Git_rjs393/E-MTAB-7456/rnaseq/raw_counts/ERR2983368.tsv",
+          "/Users/ryanstubbins/Downloads/Git_rjs393/E-MTAB-7456/rnaseq/raw_counts/ERR2983369.tsv",
+          "/Users/ryanstubbins/Downloads/Git_rjs393/E-MTAB-7456/rnaseq/raw_counts/ERR2983370.tsv",
+          "/Users/ryanstubbins/Downloads/Git_rjs393/E-MTAB-7456/rnaseq/raw_counts/ERR2983371.tsv",
+          "/Users/ryanstubbins/Downloads/Git_rjs393/E-MTAB-7456/rnaseq/raw_counts/ERR2983372.tsv",
+          "/Users/ryanstubbins/Downloads/Git_rjs393/E-MTAB-7456/rnaseq/raw_counts/ERR2983373.tsv",
+          "/Users/ryanstubbins/Downloads/Git_rjs393/E-MTAB-7456/rnaseq/raw_counts/ERR2983374.tsv",
+          "/Users/ryanstubbins/Downloads/Git_rjs393/E-MTAB-7456/rnaseq/raw_counts/ERR2983375.tsv",
+          "/Users/ryanstubbins/Downloads/Git_rjs393/E-MTAB-7456/rnaseq/raw_counts/ERR2983376.tsv",
+          "/Users/ryanstubbins/Downloads/Git_rjs393/E-MTAB-7456/rnaseq/raw_counts/ERR2983377.tsv",
+          "/Users/ryanstubbins/Downloads/Git_rjs393/E-MTAB-7456/rnaseq/raw_counts/ERR2983378.tsv",
+          "/Users/ryanstubbins/Downloads/Git_rjs393/E-MTAB-7456/rnaseq/raw_counts/ERR2983379.tsv")
+
+txi <- tximport(data,
+              type = "kallisto",
+              tx2gene = tx2gene,
+              ignoreTxVersion = TRUE)
+
+counts <- as.data.frame(txi$counts)
+
+colnames(txi$counts) <- rownames(samples)
+colnames(counts) <- rownames(samples)
+```
+
+```{r}
+#Data visualization and filtering
+log_counts <- log2(counts + 1)
+log_counts <- as.matrix(log_counts)
+
+hist_pre <- hist(log_counts, col = "gray")
+
+hist_pre
+
+counts <- as.matrix(counts)
+
+melt_counts <- melt(log_counts)
+colnames(melt_counts)[1] <- "gene"
+colnames(melt_counts)[2] <- "sample"
+colnames(melt_counts)[3] <- "count"
+
+box_pre <- melt_counts %>%
+  ggplot(aes(x = sample, y = count)) +
+  geom_boxplot() + 
+  theme(text = element_text(size=4))
+
+box_pre
+
+density_pre <- melt_counts %>%
+  ggplot(aes(x = count, fill = sample)) +
+  geom_density() + 
+  xlim(-5, 15)
+
+density_pre
+
+dim(counts)
+
+#Create DGEList object for the coounts
+dgList <- DGEList(counts = counts, genes = rownames(counts), samples = samples)
+
+#Convert counts to CPM > 1 in at least 2 samples
+cpm <- cpm(dgList)
+
+cutoff <- cpm > 1
+
+keep <- which(rowSums(cutoff) >= 2)
+dgList <- dgList[keep,]
+
+dim(dgList)
+
+#Calculate normalization factors with TMM
+dgList <- calcNormFactors(dgList, method="TMM")
+
+#Visualize post-fitler
+log_counts <- log2(dgList$counts + 1)
+log_counts <- as.matrix(log_counts)
+
+hist_post <- hist(log_counts, col = "gray")
+
+hist_post
+
+melt_counts <- melt(log_counts)
+colnames(melt_counts)[1] <- "gene"
+colnames(melt_counts)[2] <- "sample"
+colnames(melt_counts)[3] <- "count"
+
+box_post <- melt_counts %>%
+  ggplot(aes(x = sample, y = count)) +
+  geom_boxplot() + 
+  theme(text = element_text(size=4))
+
+box_post
+
+density_post <- melt_counts %>%
+  ggplot(aes(x = count, fill = sample)) +
+  geom_density() + 
+  xlim(-5, 15)
+
+density_post
+
+dim(dgList$counts)
+
+counts_post <- dgList$counts
+samples_post <- dgList$samples
+```

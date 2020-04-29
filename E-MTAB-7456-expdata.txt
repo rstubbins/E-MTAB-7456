@@ -1,0 +1,37 @@
+Comment[ArrayExpressAccession]	E-MTAB-7456
+MAGE-TAB Version	1.1
+Comment[Submitted Name]	Transcriptome analysis of AML samples at diagnosis and relapse after Hematopoietic Stem Cell Transplantation (HSCT)				
+Investigation Title	Transcriptome analysis of AML samples at diagnosis and relapse after Hematopoietic Stem Cell Transplantation (HSCT)
+Experiment Description	Transcriptome profiling of Acute Myeloid Leukemia samples. This dataset includes patients with diagnosis of de novo or secondary AML who experienced non-HLA loss disease relapse after allo-HCT, and for whom paired pre- and post-transplant viable leukemic samples were available.
+Experimental Design	clinical history design
+Experimental Design Term Source REF	EFO
+Experimental Design Term Accession Number	EFO:0000352
+Experimental Factor Name	sampling time point
+Experimental Factor Type	sampling time point
+Experimental Factor Term Source REF	EFO
+Experimental Factor Term Accession Number
+Person Last Name	Cittaro	Vago	Gambacorta	Lazarevic	Toffalori
+Person First Name	Davide	Luca	Valentina	Dejan	Cristina
+Person Mid Initials
+Person Email	cittaro.davide@hsr.it	vago.luca@hsr.it	gambacorta.valentina@hsr.it	lazarevic.dejan@hsr.it	toffalori.cristina@hsr.it
+Person Phone
+Person Fax
+Person Address	via Olgettina 58 20132 Milano Italy	via Olgettina 58 20132 Milano Italy	via Olgettina 58 20132 Milano Italy	via Olgettina 58 20132 Milano Italy	via Olgettina 58 20132 Milano Italy
+Person Affiliation	Center for Translational Genomics and Bioinformatics, IRCCS San Raffaele Scientific Institute, Milano	Unit of Hematology and Bone Marrow Transplantation, IRCCS San Raffaele Scientific Institute, Milano, Italy	Unit of Immunogenetics, Leukemia Genomics and Immunobiology, Division of Immunology, Transplantation and Infectious Disease, IRCCS San Raffaele Scientific Institute	Center for Translational Genomics and Bioinformatics, IRCCS San Raffaele Scientific Institute, Milano	Unit of Immunogenetics, Leukemia Genomics and Immunobiology, Division of Immunology, Transplantation and Infectious Disease, IRCCS San Raffaele Scientific Institute
+Person Roles	data analyst;submitter	investigator	experiment performer	experiment performer	experiment performer
+Public Release Date	2019-11-18
+Protocol Name	P-MTAB-81289	P-MTAB-81290	P-MTAB-81291	P-MTAB-81292
+Protocol Type	sample collection protocol	nucleic acid extraction protocol	nucleic acid library construction protocol	nucleic acid sequencing protocol
+Protocol Term Source REF	EFO	EFO	EFO	EFO
+Protocol Term Accession Number	EFO_0005518	EFO_0002944	EFO_0004184	EFO_0004170
+Protocol Description	Patients with diagnosis of de novo or secondary AML who experienced non-HLA loss disease relapse after allo-HCT, and for whom paired pre- and post-transplant viable leukemic samples had been collected upon specific written informed consent, in agreement with the Declaration of Helsinki. Samples were collected from rom the San Raffaele Leukemia Biobank, the Universitätsklinikum Essen Biobank, the Universitätsklinikum Freiburg Biobank, the Hokkaido University Biobank, the Leiden University Medical Center Biobank, the Johns Hopkins University Biobank and the Institut Paoli-Calmettes Biobank	Total RNA were extracted using RNeasy® Plus Mini or Micro Kits (Quiagen, Hilden, Germany). following the manufacturers' indications. Nucleic acid quantification was performed using a Nanodrop-2000c spectrophotometer (Thermo Fisher Scientific, Waltham, MA, USA), and quality control was performed taking advantage of the Agilent Bioanalyzer technology or the RNA Screen Tape System (both from Agilent, Santa Clara, CA, USA).	Libraries were prepared starting from 300 ng of total RNA and using the TruSeq Stranded mRNA library preparation kit (Illumina) in accordance with low-throughput protocol. After PCR enrichment (15 cycles) and purification of adapter-ligated fragments, the concentration and length of DNA fragments were measured using D1000 Screen Tape System (Agilent)	RNA-seq libraries were sequenced using Illumina Next-Seq 500 high-output kit
+Protocol Hardware				NextSeq 500
+Protocol Software
+Term Source Name	EFO
+Term Source File	http://www.ebi.ac.uk/efo/
+Term Source Version
+Comment[AEExperimentType]	RNA-seq of coding RNA
+Comment[ExperimentType]	High-throughput sequencing
+Comment[SecondaryAccession]	ERP112510
+Comment[SequenceDataURI]	http://www.ebi.ac.uk/ena/data/view/ERR2983350-ERR2983379
+SDRF File	E-MTAB-7456.sdrf.txt
